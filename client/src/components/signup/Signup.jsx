@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function Signup(){
     return (
         <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -29,6 +30,7 @@ export default function Signup(){
             >
               Sign Up
             </button>
+            <p>Already have an account? <Link to = "/" className = "text-blue-900 underline">Login</Link></p>
           </form>
         </div>
       );
