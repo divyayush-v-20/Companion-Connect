@@ -8,7 +8,7 @@ export const routes = [
         element: <Layout/>,
         children: [
             {
-                path: "/",
+                path: "/login",
                 element: <Login/>
             },
             {

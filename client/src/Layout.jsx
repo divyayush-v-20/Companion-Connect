@@ -1,10 +1,18 @@
-import {Link, Outlet} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
+import { useState, useEffect } from "react";
+import LandingPage from "./components/landing/Landing";
 export default function Layout(){
-    return(
+    const location = useLocation();
+    const [isAuthPage, setIsAuthPage] = useState(false);
+
+    useEffect(() => {
+        setIsAuthPage(location.pathname === '/login' || location.pathname === '/signup');
+    }, [location]);
+
+    return (
         <>
-            <Outlet/>
-            {/* <Link to = "/">Login</Link>
-            <Link to = "/signup">Signup</Link> */}
-            </>
-    )
+            {!isAuthPage && <LandingPage />}
+            <Outlet />
+        </>
+    );
 }

@@ -1,0 +1,51 @@
+/* Center the login form on the page */
+#auth {
+    background-color: #fff; /* White background */
+    color: #333; /* Dark text color for contrast */
+    max-width: 400px; /* Maximum width for the form */
+    margin: 100px auto; /* Center the form vertically and horizontally */
+    padding: 20px; /* Add padding around the content */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for the card */
+  }
+  
+  /* Input fields */
+  #auth input {
+    background-color: #f9f9f9; /* Light grey background for input fields */
+    color: #333; /* Dark text inside inputs */
+    border: 1px solid #ddd; /* Light border */
+    padding: 10px; /* Padding inside input fields */
+    width: 100%; /* Make inputs full width */
+    border-radius: 4px; /* Rounded corners for inputs */
+  }
+  
+  /* Button styles */
+  #auth button {
+    background-color: #ff6600; /* Orange background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 10px; /* Padding inside the button */
+    width: 100%; /* Full width button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
+  
+  #auth button:hover {
+    background-color: #e65c00; /* Darker orange on hover */
+  }
+  
+  /* Link styles */
+  #auth p {
+    text-align: center; /* Center the text */
+    color: #666; /* Lighter text color */
+  }
+  
+  #auth a {
+    color: #ff6600; /* Orange link color */
+    text-decoration: underline;
+  }
+  
+  #auth a:hover {
+    color: #e65c00; /* Darker orange on hover */
+  }
+  

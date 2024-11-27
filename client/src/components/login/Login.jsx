@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+import "./Login.css"
 export default function Login(){
     return (
-        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md" id = "auth">
           <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
           <form className="space-y-4">
             <input 
@@ -20,7 +21,7 @@ export default function Login(){
             >
               Login
             </button>
-            <p>Don't have an account? <Link to = "/signup" className = "text-blue-900 underline">Signup</Link></p>
+            <p>Don&apos;t have an account? <Link to = "/signup" className = "text-blue-900 underline">Signup</Link></p>
           </form>
         </div>
       );
