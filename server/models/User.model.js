@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    username: {
+    name: {
         type: String,
-        unique: true,
         trim: true,
-        minLength: [6, "Username must be atleast 6 characters"],
-        required: [true, "Username is required"],
+        required: [true, "Name is required"],
     }, 
     email: {
         type: String,
@@ -21,6 +19,14 @@ const userSchema = new mongoose.Schema({
         minLength: [6, "Password must be atleast 6 characters"], 
         required: [true, "Password is required"]
     },
+    stateIso2: {
+        type: String,
+        required: true
+    },
+    city: { 
+        type: String,
+        required: true
+    }
 }, {timestamps: true});
 
 export const User = mongoose.model("User", userSchema);

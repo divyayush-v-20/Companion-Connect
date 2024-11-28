@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link } from "react-router-dom";
 
@@ -135,7 +135,7 @@ const LandingPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-orange-500">Featured Pets</h2>
             <p className="mt-4 text-gray-600">Find your new furry friend from our featured list.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-3">
             {pets.map((pet, i) => (
               <div key={i} className="w-60 h-60 bg-white m-10 rounded-lg shadow-md">
                 <img
@@ -187,7 +187,7 @@ const LandingPage = () => {
 
       <footer className="bg-gray-800 text-gray-200 py-6">
         <div className="container mx-auto text-center">
-          <p>© 2024 PetAdopt. All rights reserved.</p>
+          <p>© 2024 CompanionConnect. All rights reserved.</p>
         </div>
       </footer>
     </div>
