@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "../login/Login.css";
 import { statesToIso2 } from "../../utils/StateISO2";
+import citiesData from "../../utils/StateCityData.json";
 
-import citiesData from "../../utils/StateCityData.json"
 export default function Signup() {
 
   const [name, setName] = useState("");
@@ -14,9 +13,15 @@ export default function Signup() {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [cities, setCities] = useState([]); 
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFailure, setShowFailure] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if(password !== confirmPassword){
+      alert("Passwords don't match!");
+    }
     
     const stateISO2 = statesToIso2[state];
     
@@ -27,14 +32,32 @@ export default function Signup() {
       stateISO2,
       city,
     };
+
+    console.log(userData);
     
-    try {
-      const response = await axios.post("http://localhost:8080/signup", userData);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error during signup:", error);
+    if(userData.name && userData.email && userData.password && userData.stateISO2 && userData.city){
+        var response = await fetch("http://localhost:8080/user", {
+          method: "POST",
+          body: JSON.stringify({...userData}),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if(response.ok && (response.status == "201" || response.status == "200")){
+          setShowSuccess(true);
+          setShowFailure(false);
+        }
+        else{
+          setShowFailure(true);
+          setShowSuccess(false);
+        }
+    }
+    else{
+      setShowFailure(true);
     }
   };
+
 
   useEffect(() => {
     if (state) {
