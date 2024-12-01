@@ -23,20 +23,20 @@ export default function Signup() {
       alert("Passwords don't match!");
     }
     
-    const stateISO2 = statesToIso2[state];
+    const stateIso2 = statesToIso2[state];
     
     const userData = {
       name,
       email,
       password,
-      stateISO2,
+      stateIso2,
       city,
     };
 
     console.log(userData);
     
-    if(userData.name && userData.email && userData.password && userData.stateISO2 && userData.city){
-        var response = await fetch("http://localhost:8080/user", {
+    if(userData.name && userData.email && userData.password && userData.stateIso2 && userData.city){
+        var response = await fetch("http://localhost:8000/user", {
           method: "POST",
           body: JSON.stringify({...userData}),
           headers: {
