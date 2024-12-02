@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 import "./Login.css"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loginSuccess, setLoginSuccess] = useState(false);
+
+    // useEffect(() => {
+    //   if(loginSuccess){
+    //     fetchUserDetails();
+    //   }
+    // }, [loginSuccess])
 
     const submitHandler = async (e) => {
       e.preventDefault();
@@ -13,15 +20,31 @@ export default function Login(){
       }
       console.log(userData);
       if(userData.email && userData.password){
-        await fetch("http://localhost:8000/user/login", {
+        const loginResponse = await fetch("http://localhost:8000/user/login", {
           method: "POST",
           body: JSON.stringify({...userData}),
           headers: {
             "Content-Type": "application/json"
           },
         });
+        if(loginResponse.ok){
+          const loginResponseData = await loginResponse.json();
+          localStorage.setItem("authToken", loginResponseData?.token);
+          localStorage.setItem("loggedInUserEmail", userData.email);
+
+          setLoginSuccess(true);
+          alert("Login Successful");
+        }
+        else{
+          alert("Login Failed");
+        }
       }
-    }
+      else{
+        alert("Form is Invalid");
+      }      
+    };
+
+    
 
     return (
         <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md" id = "auth">
