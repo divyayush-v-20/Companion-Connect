@@ -32,83 +32,33 @@ const userSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-const User = mongoose.model("User", userSchema);
+const UserModel = mongoose.model("UserModel", userSchema);
 
-// User.signIn = async(user, successCallback, errorCallback) => {
-//     try{
-//         const dbRes = await User.findOne({email: user.email});
-//         if(dbRes){
-//             console.log("SignIn | dbRes is: ", dbRes);
-//             const matchPass = bcrypt.compareSync(user.password, dbRes.password);
-//             if(matchPass){
-//                 const authToken = jwt.sign({email: dbRes.email}, JWT_SECRET_KEY, {
-//                     expiresIn: "1h",
-//                 });
-//                 return successCallback({token: authToken});
-//             }
-//             else{
-//                 errorCallback({status: 401, message: "Invalid Password"});
-//             }
-//         }
-//         else{
-//             return errorCallback({message: "User does not exist"});
-//         }
-//     }
-//     catch(dbError){
-//         console.error("GET | dbError is: ", dbError.message);
-//         errorCallback(dbError);
-//     }
-// };
-
-User.signIn = async (userData, successCallback, errorCallback) => {
+UserModel.signIn = async (user, successCallback, errorCallback) => {
     try {
-        // Find user by email
-        const user = await User.findOne({ email: userData.email });
-        
-        if (!user) {
-            return errorCallback({ 
-                name: "AuthenticationError", 
-                message: "Invalid email or password",
-                status: 401 
-            });
+      const dbRes = await UserModel.findOne({ email: user.email });
+      if (dbRes) {
+        console.log("SignIn | dbRes is: ", dbRes);
+        const isPasswordMatch = bcrypt.compareSync(user.password, dbRes.password);
+        if (isPasswordMatch) {
+          const authToken = jwt.sign({ email: dbRes.email }, JWT_SECRET_KEY, {
+            expiresIn: "1h",
+          });
+          successCallback({ token: authToken });
+        } else {
+          errorCallback({ status: 401, message: "Invalid password" });
         }
-        
-        // Compare passwords
-        const isMatch = await bcrypt.compare(userData.password, user.password);
-        
-        if (!isMatch) {
-            return errorCallback({ 
-                name: "AuthenticationError", 
-                message: "Invalid email or password",
-                status: 401 
-            });
-        }
-        
-        // Generate JWT token
-        const token = jwt.sign(
-            { 
-                email: user.email, 
-                userId: user._id 
-            }, 
-            JWT_SECRET_KEY, 
-            { expiresIn: '1h' }
-        );
-        
-        successCallback({ 
-            token, 
-            user: { 
-                email: user.email, 
-                name: user.name, 
-                stateIso2: user.stateIso2, 
-                city: user.city 
-            }
-        });
-    } catch (error) {
-        errorCallback(error);
+      } else {
+        errorCallback({ message: "User does not exist" });
+        return;
+      }
+    } catch (dbErr) {
+      console.error("GET | dbErr is: ", dbErr.Error);
+      errorCallback(dbErr);
     }
-};
+  };
 
-User.addUser = async (user, successCallback, errorCallback) => {
+UserModel.addUser = async (user, successCallback, errorCallback) => {
     let encryptedPassword = "";
     if(user?.password){
         try{
@@ -120,7 +70,7 @@ User.addUser = async (user, successCallback, errorCallback) => {
     }
 
     try{
-        const dbRes = await User.insertMany([
+        const dbRes = await UserModel.insertMany([
             {...user, password: encryptedPassword},
         ]);
         console.log("POST | dbRes is: ", dbRes);
@@ -132,4 +82,4 @@ User.addUser = async (user, successCallback, errorCallback) => {
     }
 }
 
-export default User;
+export default UserModel;

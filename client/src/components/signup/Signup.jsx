@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "../login/Login.css";
 import { statesToIso2 } from "../../utils/StateISO2";
 import citiesData from "../../utils/StateCityData.json";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
 
@@ -15,6 +16,7 @@ export default function Signup() {
   const [cities, setCities] = useState([]); 
   const [showSuccess, setShowSuccess] = useState(false);
   const [showFailure, setShowFailure] = useState(false);
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -47,6 +49,8 @@ export default function Signup() {
         if(response.ok && (response.status == "201" || response.status == "200")){
           setShowSuccess(true);
           setShowFailure(false);
+          alert("Signup Successful");
+          navigate("/login");
         }
         else{
           setShowFailure(true);
