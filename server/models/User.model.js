@@ -34,6 +34,24 @@ const userSchema = new mongoose.Schema({
 
 const UserModel = mongoose.model("UserModel", userSchema);
 
+UserModel.getUser = async(req, successCallback, errorCallback) => {
+  const reqMail = req?.params?.email;
+  const tokenMail = req?.params?.emailFromAuthToken;
+
+  if(reqMail !== tokenMail){
+    errorCallback({ status: 401, message: "Invalid credentials" });
+  }
+
+  try {
+    const dbRes = await UserModel.find({ email: reqMail });
+    console.log("GET | dbRes is: ", dbRes);
+    successCallback(dbRes);
+  } catch (dbErr) {
+    console.error("GET | dbErr is: ", dbErr.Error);
+    errorCallback(dbErr);
+  }
+}
+
 UserModel.signIn = async (user, successCallback, errorCallback) => {
     try {
       const dbRes = await UserModel.findOne({ email: user.email });

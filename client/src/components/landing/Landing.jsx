@@ -47,7 +47,7 @@ const LandingPage = () => {
             </svg>
           </button>
           <ul className={`md:flex space-x-8 hidden md:block`}>
-            {["hero", "about", "featured", "testimonials", "contact"].map(
+            {["home", "about", "featured", "testimonials", "contact"].map(
               (section) => (
                 <li key={section}>
                   <ScrollLink
@@ -66,7 +66,7 @@ const LandingPage = () => {
         </div>
         {isNavOpen && (
           <ul className="md:hidden bg-orange-500 shadow-md">
-            {["hero", "about", "featured", "testimonials", "contact"].map(
+            {["home", "about", "featured", "testimonials", "contact"].map(
               (section) => (
                 <li key={section} className="border-b border-orange-300">
                   <ScrollLink
