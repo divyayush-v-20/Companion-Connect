@@ -1,11 +1,32 @@
 import express from "express"
 import UserModel from "../models/User.model.js"
+import { verifyToken } from "../utils/helper.js";
 
 const router = express.Router();
 
-// router.post("/:email", (req, res) => {
-
-// });
+router.get("/:email", verifyToken, (req, res) => {
+    console.log("fetch req received");
+    UserModel.getUser(
+        req,
+        (dbRes) => {
+            if(dbRes){
+                if (!res.headersSent) {
+                    res.status(200).json(dbRes);
+                }
+            }
+            else{
+                if (!res.headersSent) {
+                    res.status(204).json(null);
+                }
+            }
+        },
+        (dbErr) => {
+            console.log(dbErr.name);
+            res.status(dbErr.status || 500);
+            res.send({error: dbErr.message});
+        }
+    )
+});
 
 router.post("/login", (req, res) => {
     const userData = req.body;

@@ -1,9 +1,28 @@
 import { Link } from "react-router-dom";
 import "./Login.css"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loginSuccess, setLoginSuccess] = useState(false);
+
+    useEffect(() => {
+      if(loginSuccess){
+        fetchUserDetails();
+      }
+    }, [loginSuccess])
+
+    const fetchUserDetails = async() => {
+      let email = localStorage.getItem("currentUserEmail");
+      var fetchResponse = await fetch(`http://localhost:8000/user/${email}`,{
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("authToken")
+        }
+      });
+      let userDetails = await fetchResponse.json();
+      console.log(userDetails);
+    }
 
     const submitHandler = async (e) => {
       e.preventDefault();
@@ -23,7 +42,10 @@ export default function Login(){
         if(loginRes.ok){
           const loginData = await loginRes.json();
           console.log(loginData);
+          localStorage.setItem("authToken", loginData.token);
+          localStorage.setItem("currentUserEmail", userData.email);
           alert("Login Successful");
+          fetchUserDetails();
         }
       }
     }

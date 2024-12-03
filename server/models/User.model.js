@@ -36,7 +36,7 @@ const UserModel = mongoose.model("UserModel", userSchema);
 
 UserModel.getUser = async(req, successCallback, errorCallback) => {
   const reqMail = req?.params?.email;
-  const tokenMail = req?.params?.emailFromAuthToken;
+  const tokenMail = req?.emailFromAuthToken;
 
   if(reqMail !== tokenMail){
     errorCallback({ status: 401, message: "Invalid credentials" });
@@ -46,7 +46,8 @@ UserModel.getUser = async(req, successCallback, errorCallback) => {
     const dbRes = await UserModel.find({ email: reqMail });
     console.log("GET | dbRes is: ", dbRes);
     successCallback(dbRes);
-  } catch (dbErr) {
+  } 
+  catch (dbErr) {
     console.error("GET | dbErr is: ", dbErr.Error);
     errorCallback(dbErr);
   }
