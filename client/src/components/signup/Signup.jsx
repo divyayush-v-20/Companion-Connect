@@ -21,8 +21,14 @@ export default function Signup() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    if(password.length < 6) {
+      alert("Password must be at least 6 characters long!");
+      return;
+    }
+
     if(password !== confirmPassword){
       alert("Passwords don't match!");
+      return;
     }
     
     const stateIso2 = statesToIso2[state];

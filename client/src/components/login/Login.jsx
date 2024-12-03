@@ -5,6 +5,7 @@ export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginSuccess, setLoginSuccess] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
 
     useEffect(() => {
       if(loginSuccess){
@@ -60,12 +61,35 @@ export default function Login(){
               className="w-full p-2 border rounded-md"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input 
-              type="password" 
-              placeholder="Password" 
-              className="w-full p-2 border rounded-md"
-              onChange = {(e) => setPassword(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full p-2 pr-10 border rounded-md"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"
+                style={{
+                  padding: 0,
+                  margin: 0,
+                  width: "24px",
+                  height: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
+
+
             <button 
               type="submit"
               className="w-full bg-blue-500 text-white p-2 rounded-md"
