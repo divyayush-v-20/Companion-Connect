@@ -1,17 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css"
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loginSuccess, setLoginSuccess] = useState(false);
     const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+    const navigate = useNavigate();
 
-    useEffect(() => {
-      if(loginSuccess){
-        fetchUserDetails();
-      }
-    }, [loginSuccess])
 
     const fetchUserDetails = async() => {
       let email = localStorage.getItem("currentUserEmail");
@@ -21,8 +17,15 @@ export default function Login(){
           Authorization: localStorage.getItem("authToken")
         }
       });
-      let userDetails = await fetchResponse.json();
-      console.log(userDetails);
+      if(fetchResponse.ok){
+        const userData = await fetchResponse.json();
+        console.log(userData);
+        navigate("/home");
+        localStorage.setItem("currentUserName", userData[0].name);
+        localStorage.setItem("currentUserCity", userData[0].city);
+        localStorage.setItem("currentUserState", userData[0].stateIso2);
+        // console.log(userData[0].name + " " + userData[0].city + " " + userData[0].stateIso2)
+      }
     }
 
     const submitHandler = async (e) => {
@@ -85,7 +88,8 @@ export default function Login(){
                   cursor: "pointer",
                 }}
               >
-                {showPassword ? "🙈" : "👁️"}
+                
+                {showPassword ? <EyeSlashIcon className="h-5 w-5 text-gray-600" /> : <EyeIcon className="h-5 w-5 text-gray-600" />}
               </button>
             </div>
 
