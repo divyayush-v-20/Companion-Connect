@@ -1,7 +1,7 @@
 import Layout from "./Layout";
 import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
-import Home from "./components/home/Home";
+import HomePage from "./components/home/Home";
 export const routes = [
     {
         path: "/",
@@ -19,6 +19,6 @@ export const routes = [
     },
     {
         path: "/home",
-        element: <Home/>
+        element: <HomePage/>
     }
 ];

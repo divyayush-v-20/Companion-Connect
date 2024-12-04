@@ -60,7 +60,8 @@ export default function Login(){
           <form className="space-y-4" onSubmit={submitHandler}>
             <input 
               type="email" 
-              placeholder="Email" 
+              placeholder="Email"
+              required
               className="w-full p-2 border rounded-md"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -68,6 +69,7 @@ export default function Login(){
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
+                required
                 className="w-full p-2 pr-10 border rounded-md"
                 onChange={(e) => setPassword(e.target.value)}
               />
