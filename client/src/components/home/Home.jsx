@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const pets = [
@@ -36,6 +37,25 @@ const HomePage = () => {
   const [selectedPet, setSelectedPet] = useState(null); // For pop-up
   const [message, setMessage] = useState(""); // Message for contacting the owner
   const overlayRef = useRef(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const nav = useNavigate();
+
+  useEffect(() => {
+    if(localStorage.getItem("authToken") == undefined){
+      setIsLoggedIn(false)
+    }
+  }, [isLoggedIn])
+
+  const handleAuth = () => {
+    if(isLoggedIn){
+      localStorage.clear();
+      setIsLoggedIn(false);
+      nav("/");
+    }
+    else{
+      nav("/login");
+    }
+  }
 
   const filteredPets = pets.filter((pet) => {
     return (
@@ -70,15 +90,13 @@ const HomePage = () => {
         <nav className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">CompanionConnect</h1>
           <ul className="flex space-x-6">
-            <li><a href="#" className="hover:text-gray-200">Home</a></li>
-            <li><a href="#" className="hover:text-gray-200">About</a></li>
-            <li><a href="#" className="hover:text-gray-200">Featured</a></li>
-            <li><a href="#" className="hover:text-gray-200">Testimonials</a></li>
-            <li><a href="#" className="hover:text-gray-200">Contact</a></li>
+          <li><Link to = "/" className = "hover:text-gray-200">Home</Link></li>
+          <li><Link to = "/" className = "hover:text-gray-200">Give For Adoption</Link></li>
+          <li><Link to = "/" className = "hover:text-gray-200">Contact</Link></li>
             <li>
-              <a href="#" className="bg-white text-orange-500 py-1 px-4 rounded hover:bg-gray-200">
-                Login
-              </a>
+              <Link to = "" className="bg-white text-orange-500 py-1 px-4 rounded hover:bg-gray-200" onClick = {handleAuth}>
+                 {isLoggedIn ? "Logout" : "Login"}
+              </Link>
             </li>
           </ul>
         </nav>
