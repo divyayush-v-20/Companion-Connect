@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Outlet} from "react-router-dom";
 
 const HomePage = () => {
   const pets = [
@@ -86,12 +86,13 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
+      <Outlet/>
       <header className="sticky top-0 z-10 bg-gradient-to-r from-orange-500 to-orange-400 text-white py-4 px-8">
         <nav className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">CompanionConnect</h1>
           <ul className="flex space-x-6">
           <li><Link to = "/" className = "hover:text-gray-200">Home</Link></li>
-          <li><Link to = "/" className = "hover:text-gray-200">Give For Adoption</Link></li>
+          <li><Link to = "/adoption" className = "hover:text-gray-200">Give For Adoption</Link></li>
           <li><Link to = "/" className = "hover:text-gray-200">Contact</Link></li>
             <li>
               <Link to = "" className="bg-white text-orange-500 py-1 px-4 rounded hover:bg-gray-200" onClick = {handleAuth}>
