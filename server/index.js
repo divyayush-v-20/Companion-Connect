@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import {connectDB} from "./config/db.js"
 import cors from "cors";
 import userRoute from "./routes/user.js"
+import petRoute from "./routes/pet.js"
 
 dotenv.config();
 
@@ -21,5 +22,6 @@ app.listen(port, () => {
 });
 
 app.use("/user", userRoute);
+app.use("/pets", petRoute);
 
 connectDB();

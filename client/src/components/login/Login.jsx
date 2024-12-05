@@ -51,6 +51,9 @@ export default function Login(){
           alert("Login Successful");
           fetchUserDetails();
         }
+        else{
+          alert("Authorization Error");
+        }
       }
     }
 

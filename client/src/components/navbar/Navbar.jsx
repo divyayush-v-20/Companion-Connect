@@ -1,9 +1,29 @@
-import { useState } from "react";
-import { Link as ScrollLink } from "react-scroll";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = ({ user, onLogout }) => {
+const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleAuth = () => {
+    if (isLoggedIn) {
+      localStorage.clear();
+      setIsLoggedIn(false);
+      navigate("/");
+    }
+    else{
+      navigate("/login")
+    }
+  };
 
   return (
     <nav className="bg-orange-500 fixed top-0 left-0 w-full z-50 shadow-md">
@@ -32,81 +52,72 @@ const Navbar = ({ user, onLogout }) => {
           </svg>
         </button>
 
-        <ul className="hidden md:flex space-x-8">
-          {["home", "about", "featured", "testimonials", "contact"].map(
-            (section) => (
-              <li key={section}>
-                <ScrollLink
-                  to={section}
-                  smooth={true}
-                  duration={500}
-                  className="cursor-pointer text-white hover:text-orange-200"
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </ScrollLink>
-              </li>
-            )
-          )}
+        <ul className="hidden md:flex space-x-6">
           <li>
-            {user ? (
-              <button
-                onClick={onLogout}
-                className="cursor-pointer text-white hover:text-orange-200"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                className="cursor-pointer text-white hover:text-orange-200"
-              >
-                Login
-              </Link>
-            )}
+            <Link to="/" className="text-white hover:text-gray-200">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/adoption" className="text-white hover:text-gray-200">
+              Give For Adoption
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="text-white hover:text-gray-200">
+              Contact
+            </Link>
+          </li>
+          <li>
+            <button
+              className="bg-white text-orange-500 py-1 px-4 rounded hover:bg-gray-200"
+              onClick={handleAuth}
+            >
+              {isLoggedIn ? "Logout" : "Login"}
+            </button>
           </li>
         </ul>
       </div>
 
       {isNavOpen && (
         <ul className="md:hidden bg-orange-500 shadow-md">
-          {["home", "about", "featured", "testimonials", "contact"].map(
-            (section) => (
-              <li
-                key={section}
-                className="border-b border-orange-300 text-center"
-              >
-                <ScrollLink
-                  to={section}
-                  smooth={true}
-                  duration={500}
-                  onClick={() => setIsNavOpen(false)}
-                  className="block py-2 text-white hover:text-orange-200"
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </ScrollLink>
-              </li>
-            )
-          )}
+          <li className="border-b border-orange-300 text-center">
+            <Link
+              to="/"
+              className="block py-2 text-white hover:text-orange-200"
+              onClick={() => setIsNavOpen(false)}
+            >
+              Home
+            </Link>
+          </li>
+          <li className="border-b border-orange-300 text-center">
+            <Link
+              to="/adoption"
+              className="block py-2 text-white hover:text-orange-200"
+              onClick={() => setIsNavOpen(false)}
+            >
+              Give For Adoption
+            </Link>
+          </li>
+          <li className="border-b border-orange-300 text-center">
+            <Link
+              to="/"
+              className="block py-2 text-white hover:text-orange-200"
+              onClick={() => setIsNavOpen(false)}
+            >
+              Contact
+            </Link>
+          </li>
           <li className="text-center border-t border-orange-300">
-            {user ? (
-              <button
-                onClick={() => {
-                  onLogout();
-                  setIsNavOpen(false);
-                }}
-                className="block py-2 text-white hover:text-orange-200 w-full"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setIsNavOpen(false)}
-                className="block py-2 text-white hover:text-orange-200 w-full"
-              >
-                Login
-              </Link>
-            )}
+            <button
+              className="block py-2 text-white hover:text-orange-200 w-full"
+              onClick={() => {
+                handleAuth();
+                setIsNavOpen(false);
+              }}
+            >
+              {isLoggedIn ? "Logout" : "Login"}
+            </button>
           </li>
         </ul>
       )}

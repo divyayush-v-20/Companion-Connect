@@ -59,6 +59,7 @@ export default function Signup() {
           navigate("/login");
         }
         else{
+          alert("User Already Exists");
           setShowFailure(true);
           setShowSuccess(false);
         }
@@ -67,6 +68,13 @@ export default function Signup() {
       setShowFailure(true);
     }
   };
+
+  if(showSuccess){
+    console.log("signup successful");
+  }
+  if(showFailure){
+    console.log("signup failed");
+  }
 
 
   useEffect(() => {
