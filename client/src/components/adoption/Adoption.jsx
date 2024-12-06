@@ -3,6 +3,7 @@ import Navbar from "../navbar/Navbar";
 import { statesToIso2 } from "../../utils/StateISO2";
 import citiesData from "../../utils/StateCityData.json";
 
+
 const GiveForAdoption = () => {
   const [name, setName] = useState("");
   const [breed, setBreed] = useState("");
@@ -43,27 +44,28 @@ const GiveForAdoption = () => {
       gender,
       age,
       description,
-      image,
       stateIso2,
       city,
       currentUserEmail
     };
 
-    if(petData){
-      var response = await fetch("http://localhost:8000/pets", {
-        method: "POST",
-        body: JSON.stringify({...petData}),
-        headers: {
-          "Content-Type": "application/json"
-        }
+    const formData = new FormData();
+    Object.keys(petData).forEach((key) => {
+      formData.append(key, petData[key]);
+    });
+
+    formData.append('image', image);
+
+    try{
+      const response = await fetch("http://localhost:8000/pet/upload-pet", {
+        method: 'POST',
+        body: formData,
       });
-      if(response.ok){
-        console.log("Submitted Pet Data:", petData);
-        alert("Pet submitted successfully for adoption!");
-      }
-      else{
-        alert("server error");
-      }
+      const result = await response.json();
+      console.log(result);
+    }
+    catch(err){
+      console.log("Error uploading data: ", err);
     }
 
 
