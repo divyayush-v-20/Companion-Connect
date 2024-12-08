@@ -114,6 +114,9 @@ const Navbar = () => {
             >
               Contact
             </Link>
+            {isAdmin && <Link to = "/admin" className="text-white hover:text-gray-200">
+              Admin Page
+            </Link>}
           </li>
           <li className="text-center border-t border-orange-300">
             <button
