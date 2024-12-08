@@ -46,8 +46,10 @@ export default function Login(){
         if(loginRes.ok){
           const loginData = await loginRes.json();
           console.log(loginData);
+          let curr_time = new Date();
           localStorage.setItem("authToken", loginData.token);
           localStorage.setItem("currentUserEmail", userData.email);
+          localStorage.setItem("loginTime", curr_time);
           alert("Login Successful");
           fetchUserDetails();
         }
