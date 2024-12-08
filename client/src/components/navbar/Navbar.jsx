@@ -25,6 +25,8 @@ const Navbar = () => {
     }
   };
 
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+
   return (
     <nav className="bg-orange-500 fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="container mx-auto flex justify-between items-center px-4 py-4">
@@ -67,6 +69,11 @@ const Navbar = () => {
             <Link to="/" className="text-white hover:text-gray-200">
               Contact
             </Link>
+          </li>
+          <li>
+            {isAdmin && <Link to = "/admin" className="text-white hover:text-gray-200">
+              Admin Page
+            </Link>}
           </li>
           <li>
             <button

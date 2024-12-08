@@ -24,6 +24,7 @@ export default function Login(){
         localStorage.setItem("currentUserName", userData[0].name);
         localStorage.setItem("currentUserCity", userData[0].city);
         localStorage.setItem("currentUserState", userData[0].stateIso2);
+        localStorage.setItem("isAdmin", userData[0].isAdmin);
         // console.log(userData[0].name + " " + userData[0].city + " " + userData[0].stateIso2)
       }
     }

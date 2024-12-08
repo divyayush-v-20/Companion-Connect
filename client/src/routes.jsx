@@ -4,6 +4,8 @@ import Signup from "./components/signup/Signup";
 import HomePage from "./components/home/Home";
 import GiveForAdoption from "./components/adoption/Adoption";
 import ProtectedRoute from "./routeProtection";
+import AdminPage from "./components/admin/AdminPage";
+
 export const routes = [
     {
         path: "/",
@@ -26,5 +28,9 @@ export const routes = [
     {
         path: "/adoption",
         element: <ProtectedRoute element={<GiveForAdoption />} />,
+    },
+    {
+        path: "/admin",
+        element: <ProtectedRoute element = {<AdminPage />} />,
     }
 ];
