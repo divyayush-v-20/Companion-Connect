@@ -1,8 +1,18 @@
 export default function AdminPage(){
     const userName = localStorage.getItem("currentUserName");
-    return(
-        <>
-            <h1>Hey {userName}, welcome to the Admin Page</h1>
-        </>
-    )
+    const isAdmin = localStorage.getItem("isAdmin") == 'true';
+    if(isAdmin){
+        return(
+            <>
+                Hey {userName} , welcome to the Admin Page
+            </>
+        )
+    }
+    else{
+        return(
+            <>
+                Unauthorized Access
+            </>
+        )
+    }
 }

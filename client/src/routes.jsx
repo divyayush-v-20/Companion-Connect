@@ -5,6 +5,7 @@ import HomePage from "./components/home/Home";
 import GiveForAdoption from "./components/adoption/Adoption";
 import ProtectedRoute from "./routeProtection";
 import AdminPage from "./components/admin/AdminPage";
+import Test from "./testing/Test";
 
 export const routes = [
     {
@@ -20,6 +21,10 @@ export const routes = [
                 element: <Signup/>
             }
         ]
+    },
+    {
+        path: "/test",
+        element: <Test/>,
     },
     {
         path: "/home",
