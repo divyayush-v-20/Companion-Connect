@@ -4,7 +4,24 @@ import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setAdmin] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+      const getAdminInfo = async() => {
+        if(isLoggedIn){
+          const email = localStorage.getItem("currentUserEmail");
+          console.log(email);
+          const res = await fetch(`http://localhost:8000/admin/auth/${email}`, {
+            method: 'GET'
+          })
+          const status = await res.json();
+          if(status.isAdmin) setAdmin(true);
+          console.log(status.isAdmin);
+        }
+      }
+      getAdminInfo();
+  }, [isLoggedIn])
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
@@ -24,8 +41,6 @@ const Navbar = () => {
       navigate("/login")
     }
   };
-
-  const isAdmin = localStorage.getItem("isAdmin") === "true";
 
   return (
     <nav className="bg-orange-500 fixed top-0 left-0 w-full z-50 shadow-md">

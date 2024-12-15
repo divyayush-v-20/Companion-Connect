@@ -5,6 +5,7 @@ import cors from "cors";
 import userRoute from "./routes/User.route.js"
 import path from "path"
 import petRoute from "./routes/Pet.route.js"
+import adminRoute from "./routes/Admin.route.js"
 import { fileURLToPath } from "url";
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.listen(port, () => {
 });
 
 app.use("/user", userRoute);
+app.use("/admin", adminRoute);
 app.use("/pet", petRoute);
 
 connectDB();
