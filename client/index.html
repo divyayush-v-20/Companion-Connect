@@ -13,8 +13,9 @@
       let curr_time = new Date();
       if(localStorage.getItem("authToken")){
         let login_time = new Date(localStorage.getItem("loginTime"));
-        let diff = (curr_time - login_time) / (3600);
-        if(diff >= 24){
+        let diff = (curr_time - login_time) / (1000);
+        diff = diff / 3600;
+        if(diff >= 240){
           localStorage.clear();
         }
       }
