@@ -50,12 +50,22 @@ export default function AdminPage() {
     })
     if(dbRes.ok){
         console.log("Updated Successfully");
+        fetchPetRequests();
     }
   };
 
-  const handleReject = (index) => {
-    console.log(`Reject pet request at index ${index}`);
+  const handleReject = async (id) => {
+    // console.log(`Reject pet request at index ${index}`);
     // Add your reject logic here
+    console.log('inside reject method');
+
+    const dbRes = await fetch(`http://localhost:8000/admin/pets/reject/${id}`, {
+        method: 'POST',
+    })
+    if(dbRes.ok){
+      console.log("Updated Successfully");
+      fetchPetRequests();
+    }
   };
 
   return (

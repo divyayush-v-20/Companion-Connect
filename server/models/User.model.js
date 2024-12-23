@@ -63,10 +63,10 @@ UserModel.signIn = async (user, successCallback, errorCallback) => {
       const dbRes = await UserModel.findOne({ email: user.email });
       if (dbRes) {
         console.log("SignIn | dbRes is: ", dbRes);
-        const isPasswordMatch = bcrypt.compareSync(user.password, dbRes.password);
+        const isPasswordMatch = await bcrypt.compareSync(user.password, dbRes.password);
         if (isPasswordMatch) {
           const authToken = jwt.sign({ email: dbRes.email }, JWT_SECRET_KEY, {
-            expiresIn: "1h",
+            expiresIn: "1d",
           });
           successCallback({ token: authToken });
         } else {
