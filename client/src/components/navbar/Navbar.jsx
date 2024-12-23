@@ -71,7 +71,7 @@ const Navbar = () => {
 
         <ul className="hidden md:flex space-x-6">
           <li>
-            <Link to="/" className="text-white hover:text-gray-200">
+            <Link to="/home" className="text-white hover:text-gray-200">
               Home
             </Link>
           </li>

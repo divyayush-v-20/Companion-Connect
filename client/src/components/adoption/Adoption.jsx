@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../navbar/Navbar";
 import { statesToIso2 } from "../../utils/StateISO2";
 import citiesData from "../../utils/StateCityData.json";
+import { useNavigate } from "react-router-dom";
 
 
 const GiveForAdoption = () => {
@@ -17,6 +18,7 @@ const GiveForAdoption = () => {
   const [previewImage, setPreviewImage] = useState(null);
 
   const currentUserEmail = localStorage.getItem("currentUserEmail");
+  const navigate = useNavigate();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -63,6 +65,10 @@ const GiveForAdoption = () => {
       });
       const result = await response.json();
       console.log(result);
+      if(response.ok && result){
+        alert("Pet data saved successfully!");
+        navigate("/home");
+      }
     }
     catch(err){
       console.log("Error uploading data: ", err);
@@ -230,9 +236,10 @@ const GiveForAdoption = () => {
               <img
                 src={previewImage}
                 alt="Preview"
-                className="mt-4 w-full h-48 object-cover rounded-lg"
+                className="mt-4 w-full h-auto object-contain rounded-lg"
               />
             )}
+
           </div>
 
           <button
