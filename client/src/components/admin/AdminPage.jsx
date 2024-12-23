@@ -44,7 +44,6 @@ export default function AdminPage() {
   };
 
   const handleApprove = async (id) => {
-    // console.log(`Approve pet request at index ${index}`);
     const dbRes = await fetch(`http://localhost:8000/admin/pets/approve/${id}`, {
         method: 'POST',
     })
@@ -55,8 +54,6 @@ export default function AdminPage() {
   };
 
   const handleReject = async (id) => {
-    // console.log(`Reject pet request at index ${index}`);
-    // Add your reject logic here
     console.log('inside reject method');
 
     const dbRes = await fetch(`http://localhost:8000/admin/pets/reject/${id}`, {
