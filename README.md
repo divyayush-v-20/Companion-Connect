@@ -49,7 +49,7 @@ Follow these steps to get Companion Connect up and running locally:
 1. **Clone the Repository:**
 
    ```bash
-   url for cloning
+   git clone https://github.com/divyayush-v-20/Companion-Connect.git
 
 2. **Install Dependencies:**
 
@@ -68,7 +68,7 @@ Follow these steps to get Companion Connect up and running locally:
 
    - Create a `.env` file in the backend directory and provide the following variables:
      ```env
-     PORT=5000
+     PORT=8000
      MONGO_URI=your_mongodb_connection_string
      JWT_SECRET=your_jwt_secret_key
      ```
@@ -88,13 +88,42 @@ Follow these steps to get Companion Connect up and running locally:
 
 5. **Access the Application:**
 
-   - Open your browser and navigate to `http://localhost:5174`.
+   - Open your browser and navigate to `http://localhost:5173`.
 
 ---
+
+### File Structure
+
+```ssh
+COMPANION-CONNECT/
+├── client/
+│    ├── public/
+│    └── src/
+│        ├── assets/
+│        ├── components/
+│        │   ├── admin/
+│        │   ├── adoption/
+│        │   ├── home/
+│        │   ├── landing/
+│        │   ├── login/
+│        │   ├── navbar/
+│        │   └── signup/
+│        ├── routes/
+│        └── utils/
+│
+├── server/
+    ├── config/
+    ├── controllers/
+    ├── models/
+    ├── routes/
+    ├── uploads/
+    └── utils/
+```
 
 ## Future Enhancements
 
 - **Email Notifications:** Notify users when their submissions are approved or rejected.
 - **Advanced Filters:** Add more filters like vaccination status and other medical conditions.
 - **Favorites List:** Allow users to save their favorite pets for later reference.
+- **Messaging Service:** Implement a messaging system to facilitate communication between users interested in adopting pets.
 - **Mobile App:** Expand the platform with a dedicated mobile application.
