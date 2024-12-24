@@ -100,28 +100,27 @@ Follow these steps to get Companion Connect up and running locally:
 
 ```ssh
 COMPANION-CONNECT/
-├── client/
-│    ├── public/
-│    └── src/
-│        ├── assets/
-│        ├── components/
-│        │   ├── admin/
-│        │   ├── adoption/
-│        │   ├── home/
-│        │   ├── landing/
-│        │   ├── login/
-│        │   ├── navbar/
-│        │   └── signup/
-│        ├── routes/
-│        └── utils/
+├── client/                      # Frontend codebase
+│    ├── public/                 # Static assets
+│    └── src/                    # Source code
+│        ├── components/         # Reusable UI components
+│        │   ├── admin/          # Admin-specific UI
+│        │   ├── adoption/       # Adoption page UI
+│        │   ├── home/           # Homepage UI
+│        │   ├── landing/        # Landing Page UI
+│        │   ├── login/          # Login UI
+│        │   ├── navbar/         # Navigation bar UI
+│        │   └── signup/         # Signup UI
+│        ├── routes/             # Route definitions
+│        └── utils/              # Utility functions for frontend
 │
-└── server/
-    ├── config/
-    ├── controllers/
-    ├── models/
-    ├── routes/
-    ├── uploads/
-    └── utils/
+└── server/                      # Backend codebase
+    ├── config/                  # Configuration files
+    ├── controllers/             # API logic
+    ├── models/                  # Database schemas
+    ├── routes/                  # API routes
+    ├── uploads/                 # Uploaded files
+    └── utils/                   # Utility functions for backend
 ```
 
 ## Future Enhancements
