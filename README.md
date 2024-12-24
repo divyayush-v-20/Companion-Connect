@@ -59,8 +59,10 @@ Follow these steps to get Companion Connect up and running locally:
      npm install
      ```
    - Navigate to the frontend directory and install dependencies:
+     
+     In another terminal write:
      ```bash
-     cd ../client
+     cd client
      npm install
      ```
 
@@ -81,8 +83,10 @@ Follow these steps to get Companion Connect up and running locally:
      npm run dev
      ```
    - Start the frontend development server:
+
+     In another terminal write:
      ```bash
-     cd ../client
+     cd client
      npm run dev
      ```
 
@@ -111,7 +115,7 @@ COMPANION-CONNECT/
 │        ├── routes/
 │        └── utils/
 │
-├── server/
+└── server/
     ├── config/
     ├── controllers/
     ├── models/
