@@ -34,10 +34,8 @@ const HomePage = () => {
 
   const [selectedBreed, setSelectedBreed] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedPet, setSelectedPet] = useState(null);
-  const [message, setMessage] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
-
+  const [selectedPet, setSelectedPet] = useState(null); // For pop-up
+  const [message, setMessage] = useState(""); // Message for contacting the owner
   const overlayRef = useRef(null);
 
   const filteredPets = pets.filter((pet) => {
@@ -69,27 +67,14 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Navbar />
-
-      <div className="lg:hidden flex justify-between items-center px-4 py-4 bg-white border-b border-gray-200 mt-16">
-        <h1 className="text-2xl font-bold text-orange-500">Available Pets</h1>
-        <button
-          className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-400"
-          onClick={() => setShowFilters(true)}
-        >
-          Filters
-        </button>
-      </div>
+      
+      <Navbar/>
 
       <div className="flex flex-1">
-        <aside
-          className={`hidden lg:block sticky top-16 bg-white w-full lg:w-1/4 p-6 border-r border-gray-200`}
-        >
+        <aside className="sticky top-16 bg-white w-full lg:w-1/4 p-6 border-r border-gray-200">
           <h2 className="text-xl font-bold text-orange-500 mb-4">Filters</h2>
           <div className="mb-6">
-            <label className="block text-gray-600 mb-2 font-semibold">
-              Breed
-            </label>
+            <label className="block text-gray-600 mb-2 font-semibold">Breed</label>
             <select
               className="w-full border border-gray-300 rounded px-3 py-2"
               value={selectedBreed}
@@ -97,16 +82,12 @@ const HomePage = () => {
             >
               <option value="">All Breeds</option>
               {breeds.map((breed) => (
-                <option key={breed} value={breed}>
-                  {breed}
-                </option>
+                <option key={breed} value={breed}>{breed}</option>
               ))}
             </select>
           </div>
           <div className="mb-6">
-            <label className="block text-gray-600 mb-2 font-semibold">
-              Location
-            </label>
+            <label className="block text-gray-600 mb-2 font-semibold">Location</label>
             <select
               className="w-full border border-gray-300 rounded px-3 py-2"
               value={selectedLocation}
@@ -114,9 +95,7 @@ const HomePage = () => {
             >
               <option value="">All Locations</option>
               {locations.map((location) => (
-                <option key={location} value={location}>
-                  {location}
-                </option>
+                <option key={location} value={location}>{location}</option>
               ))}
             </select>
           </div>
@@ -133,24 +112,13 @@ const HomePage = () => {
 
         <main className="flex-1 p-6">
           <section>
-            <h1 className="text-3xl font-bold text-orange-500 mb-6">
-              Available Pets
-            </h1>
+            <h1 className="text-3xl font-bold text-orange-500 mb-6">Available Pets</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               {filteredPets.map((pet) => (
-                <div
-                  key={pet.id}
-                  className="bg-white rounded-lg shadow-md p-4 transform hover:scale-105 transition duration-200"
-                >
-                  <img
-                    src={pet.image}
-                    alt={pet.name}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                  />
+                <div key={pet.id} className="bg-white rounded-lg shadow-md p-4 transform hover:scale-105 transition duration-200">
+                  <img src={pet.image} alt={pet.name} className="w-full h-48 object-cover rounded-t-lg" />
                   <div className="mt-4 text-center">
-                    <h3 className="text-xl font-semibold text-orange-500">
-                      {pet.name}
-                    </h3>
+                    <h3 className="text-xl font-semibold text-orange-500">{pet.name}</h3>
                     <p className="text-gray-600 mt-1">Breed: {pet.breed}</p>
                     <p className="text-gray-600 mt-1">Location: {pet.location}</p>
                     <button
@@ -167,56 +135,42 @@ const HomePage = () => {
         </main>
       </div>
 
-      {showFilters && (
+      {selectedPet && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <h2 className="text-2xl font-bold text-orange-500 mb-4">Filters</h2>
-            <div className="mb-6">
-              <label className="block text-gray-600 mb-2 font-semibold">
-                Breed
-              </label>
-              <select
-                className="w-full border border-gray-300 rounded px-3 py-2"
-                value={selectedBreed}
-                onChange={(e) => setSelectedBreed(e.target.value)}
-              >
-                <option value="">All Breeds</option>
-                {breeds.map((breed) => (
-                  <option key={breed} value={breed}>
-                    {breed}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-6">
-              <label className="block text-gray-600 mb-2 font-semibold">
-                Location
-              </label>
-              <select
-                className="w-full border border-gray-300 rounded px-3 py-2"
-                value={selectedLocation}
-                onChange={(e) => setSelectedLocation(e.target.value)}
-              >
-                <option value="">All Locations</option>
-                {locations.map((location) => (
-                  <option key={location} value={location}>
-                    {location}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div ref={overlayRef} className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+            <h2 className="text-2xl font-bold text-orange-500 mb-4">{selectedPet.name}</h2>
+            <p className="mb-2"><strong>Breed:</strong> {selectedPet.breed}</p>
+            <p className="mb-2"><strong>Gender:</strong> {selectedPet.gender}</p>
+            <p className="mb-4"><strong>Description:</strong> {selectedPet.description}</p>
             <button
-              onClick={() => {
-                setSelectedBreed("");
-                setSelectedLocation("");
-              }}
-              className="w-full bg-orange-500 text-white py-2 rounded hover:bg-orange-400"
+              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400"
+              onClick={() => setMessage("")}
             >
-              Reset Filters
+              Contact the Owner
             </button>
+            {message !== null && (
+              <div className="mt-4">
+                <textarea
+                  className="w-full border border-gray-300 rounded p-2 resize-none"
+                  rows="3"
+                  placeholder="Write your message here..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                ></textarea>
+                <button
+                  className="mt-2 bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400"
+                  onClick={() => {
+                    alert(`Message sent: ${message}`);
+                    setSelectedPet(null);
+                  }}
+                >
+                  Send
+                </button>
+              </div>
+            )}
             <button
-              onClick={() => setShowFilters(false)}
               className="mt-4 text-gray-500 hover:text-gray-700"
+              onClick={() => setSelectedPet(null)}
             >
               Close
             </button>
