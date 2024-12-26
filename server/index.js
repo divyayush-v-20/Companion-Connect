@@ -19,7 +19,9 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static("uploads"));
+// images from client side can be accessed by fetching
+// http://localhost:8000/uploads/<filename>
 
 app.get("/", (req, res) => {
     res.send(`Server running at http://localhost:${port}`)
