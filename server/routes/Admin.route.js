@@ -1,6 +1,7 @@
 import express from "express";
 import UserModel from "../models/User.model.js";
 import PetModel from "../models/Pet.model.js"
+import fs from "fs";
 
 const router = express.Router();
 
@@ -50,6 +51,16 @@ router.post("/pets/reject/:id", async (req, res) => {
     try{
         const deletedPet = await PetModel.findByIdAndDelete(id);
         if(deletedPet){
+            const filePath = `../${deletedPet.image}`;
+            let customPath = filePath.replace(/\\/g, '/');
+            console.log(customPath);
+            fs.promises.unlink(customPath)
+            .then(() => {
+                console.log('File Deleted');
+            })
+            .catch((error) => {
+                console.log('Error Deleting File');
+            })
             res.status(200).send({message: "Pet removed successfully"});
         }
         else{
