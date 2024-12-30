@@ -4,7 +4,6 @@ import { statesToIso2 } from "../../utils/StateISO2";
 import citiesData from "../../utils/StateCityData.json";
 import { useNavigate } from "react-router-dom";
 
-
 const GiveForAdoption = () => {
   const [name, setName] = useState("");
   const [breed, setBreed] = useState("");
@@ -29,7 +28,7 @@ const GiveForAdoption = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(age <= 0){
+    if (age <= 0) {
       alert("Invalid Age Entered!");
       return;
     }
@@ -48,7 +47,7 @@ const GiveForAdoption = () => {
       description,
       stateIso2,
       city,
-      currentUserEmail
+      currentUserEmail,
     };
 
     const formData = new FormData();
@@ -56,24 +55,22 @@ const GiveForAdoption = () => {
       formData.append(key, petData[key]);
     });
 
-    formData.append('image', image);
+    formData.append("image", image);
 
-    try{
+    try {
       const response = await fetch("http://localhost:8000/pet/upload-pet", {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
       const result = await response.json();
       console.log(result);
-      if(response.ok && result){
+      if (response.ok && result) {
         alert("Pet data saved successfully!");
         navigate("/home");
       }
-    }
-    catch(err){
+    } catch (err) {
       console.log("Error uploading data: ", err);
     }
-
 
     // Reset all fields
     setName("");
@@ -195,7 +192,10 @@ const GiveForAdoption = () => {
           <div className="mb-4">
             <label className="block text-gray-600 font-semibold mb-2">
               Age(in years)
-              <p>If the pet is under 1 year in age, enter 1 and provide the exact age in the description</p>
+              <p>
+                If the pet is under 1 year in age, enter 1 and provide the exact
+                age in the description
+              </p>
             </label>
             <input
               type="number"
@@ -239,7 +239,6 @@ const GiveForAdoption = () => {
                 className="mt-4 w-full h-auto object-contain rounded-lg"
               />
             )}
-
           </div>
 
           <button

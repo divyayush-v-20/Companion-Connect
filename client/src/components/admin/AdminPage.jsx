@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Navbar from "../navbar/Navbar";
 
 export default function AdminPage() {
   const [petData, setPetData] = useState([]);
@@ -66,7 +67,9 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="bg-orange-100 min-h-screen p-6">
+    <div className="flex flex-col min-h-screen bg-orange-100">
+    <Navbar />
+    <main className="flex-grow p-6">
       <h1 className="text-4xl font-bold text-center text-orange-700 mb-8">
         Admin Page
       </h1>
@@ -108,6 +111,10 @@ export default function AdminPage() {
           </div>
         ))}
       </div>
-    </div>
+    </main>
+    <footer className="bg-gradient-to-r from-orange-500 to-orange-400 text-white text-center py-4">
+      <p>© 2024 CompanionConnect. All rights reserved.</p>
+    </footer>
+  </div>
   );
 }
