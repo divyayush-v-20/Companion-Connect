@@ -1,27 +1,29 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Contact from "../contact/Contact";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-      const getAdminInfo = async() => {
-        if(isLoggedIn){
-          const email = localStorage.getItem("currentUserEmail");
-          console.log(email);
-          const res = await fetch(`http://localhost:8000/admin/auth/${email}`, {
-            method: 'GET'
-          })
-          const status = await res.json();
-          if(status.isAdmin) setAdmin(true);
-          console.log(status.isAdmin);
-        }
+    const getAdminInfo = async () => {
+      if (isLoggedIn) {
+        const email = localStorage.getItem("currentUserEmail");
+        console.log(email);
+        const res = await fetch(`http://localhost:8000/admin/auth/${email}`, {
+          method: "GET",
+        });
+        const status = await res.json();
+        if (status.isAdmin) setAdmin(true);
+        console.log(status.isAdmin);
       }
-      getAdminInfo();
-  }, [isLoggedIn])
+    };
+    getAdminInfo();
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
@@ -36,9 +38,8 @@ const Navbar = () => {
       localStorage.clear();
       setIsLoggedIn(false);
       navigate("/");
-    }
-    else{
-      navigate("/login")
+    } else {
+      navigate("/login");
     }
   };
 
@@ -50,7 +51,7 @@ const Navbar = () => {
         </h1>
 
         <button
-          className="md:hidden text-white"
+          className="custom-md:hidden text-white"
           onClick={() => setIsNavOpen(!isNavOpen)}
         >
           <svg
@@ -69,7 +70,7 @@ const Navbar = () => {
           </svg>
         </button>
 
-        <ul className="hidden md:flex space-x-6">
+        <ul className="hidden custom-md:flex space-x-6">
           <li>
             <Link to="/home" className="text-white hover:text-gray-200">
               Home
@@ -81,14 +82,19 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className="text-white hover:text-gray-200">
+            <button
+              className="text-white hover:text-gray-200"
+              onClick={() => setIsContactOpen(true)}
+            >
               Contact
-            </Link>
+            </button>
           </li>
           <li>
-            {isAdmin && <Link to = "/admin" className="text-white hover:text-gray-200">
-              Admin Page
-            </Link>}
+            {isAdmin && (
+              <Link to="/admin" className="text-white hover:text-gray-200">
+                Admin Page
+              </Link>
+            )}
           </li>
           <li>
             <button
@@ -102,50 +108,66 @@ const Navbar = () => {
       </div>
 
       {isNavOpen && (
-        <ul className="md:hidden bg-orange-500 shadow-md">
-          <li className="border-b border-orange-300 text-center">
-            <Link
-              to="/"
-              className="block py-2 text-white hover:text-orange-200"
-              onClick={() => setIsNavOpen(false)}
-            >
-              Home
-            </Link>
-          </li>
-          <li className="border-b border-orange-300 text-center">
-            <Link
-              to="/adoption"
-              className="block py-2 text-white hover:text-orange-200"
-              onClick={() => setIsNavOpen(false)}
-            >
-              Give For Adoption
-            </Link>
-          </li>
-          <li className="border-b border-orange-300 text-center">
-            <Link
-              to="/"
-              className="block py-2 text-white hover:text-orange-200"
-              onClick={() => setIsNavOpen(false)}
-            >
-              Contact
-            </Link>
-            {isAdmin && <Link to = "/admin" className="text-white hover:text-gray-200">
-              Admin Page
-            </Link>}
-          </li>
-          <li className="text-center border-t border-orange-300">
-            <button
-              className="block py-2 text-white hover:text-orange-200 w-full"
-              onClick={() => {
-                handleAuth();
-                setIsNavOpen(false);
-              }}
-            >
-              {isLoggedIn ? "Logout" : "Login"}
-            </button>
-          </li>
-        </ul>
+  <ul className="custom-md:hidden bg-orange-500 shadow-md">
+    <li className="border-b border-orange-300 text-center">
+      <Link
+        to="/home"
+        className="block py-2 text-white hover:text-orange-200"
+        onClick={() => setIsNavOpen(false)}
+      >
+        Home
+      </Link>
+    </li>
+    <li className="border-b border-orange-300 text-center">
+      <Link
+        to="/adoption"
+        className="block py-2 text-white hover:text-orange-200"
+        onClick={() => setIsNavOpen(false)}
+      >
+        Give For Adoption
+      </Link>
+    </li>
+    <li className="border-b border-orange-300 text-center">
+      <button
+        className="block py-2 text-white hover:text-orange-200 w-full"
+        onClick={() => {
+          setIsNavOpen(false);
+          setIsContactOpen(true);
+        }}
+      >
+        Contact
+      </button>
+    </li>
+    <li className="border-b border-orange-300 text-center">
+      {isAdmin && (
+        <Link
+          to="/admin"
+          className="block py-2 text-white hover:text-orange-200"
+          onClick={() => setIsNavOpen(false)}
+        >
+          Admin Page
+        </Link>
       )}
+    </li>
+
+    <li className="text-center border-t border-orange-300">
+      <button
+        className="block py-2 text-white hover:text-orange-200 w-full"
+        onClick={() => {
+          handleAuth();
+          setIsNavOpen(false);
+        }}
+      >
+        {isLoggedIn ? "Logout" : "Login"}
+      </button>
+    </li>
+  </ul>
+)}
+
+      <Contact
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
     </nav>
   );
 };
