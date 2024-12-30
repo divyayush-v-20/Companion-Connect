@@ -1,7 +1,6 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import {connectDB} from "./config/db.js"
-import cors from "cors";
 import userRoute from "./routes/User.route.js"
 import path from "path"
 import petRoute from "./routes/Pet.route.js"
@@ -16,8 +15,17 @@ const port = process.env.PORT || 8000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors());
 app.use(express.json());
+
+app.use("*", (req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, PUT, POST, DELETE, OPTIONS"
+    );
+    next();
+  });
 
 app.use("/uploads", express.static("uploads"));
 // images from client side can be accessed by fetching
