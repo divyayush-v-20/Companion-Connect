@@ -11,7 +11,7 @@ export default function Login(){
 
     const fetchUserDetails = async() => {
       let email = localStorage.getItem("currentUserEmail");
-      var fetchResponse = await fetch(`http://localhost:8000/user/${email}`,{
+      var fetchResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/${email}`,{
         method: "GET",
         headers: {
           Authorization: localStorage.getItem("authToken")
@@ -37,7 +37,7 @@ export default function Login(){
       }
       console.log(userData);
       if(userData.email && userData.password){
-        const loginRes = await fetch("http://localhost:8000/user/login", {
+        const loginRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/login`, {
           method: "POST",
           body: JSON.stringify({...userData}),
           headers: {

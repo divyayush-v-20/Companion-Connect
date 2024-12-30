@@ -44,7 +44,7 @@ export default function Signup() {
     console.log(userData);
     
     if(userData.name && userData.email && userData.password && userData.stateIso2 && userData.city){
-        var response = await fetch("http://localhost:8000/user", {
+        var response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user`, {
           method: "POST",
           body: JSON.stringify({...userData}),
           headers: {
