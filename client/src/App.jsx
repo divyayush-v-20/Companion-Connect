@@ -1,4 +1,4 @@
-import { routes } from "./routes";
+import { routes } from "./routes/routes";
 import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 export default function App(){
