@@ -1,10 +1,10 @@
-import Layout from "./Layout";
-import Login from "./components/login/Login";
-import Signup from "./components/signup/Signup";
-import HomePage from "./components/home/Home";
-import GiveForAdoption from "./components/adoption/Adoption";
+import Layout from "../Layout";
+import Login from "../components/login/Login";
+import Signup from "../components/signup/Signup";
+import HomePage from "../components/home/Home";
+import GiveForAdoption from "../components/adoption/Adoption";
 import ProtectedRoute from "./routeProtection";
-import AdminPage from "./components/admin/AdminPage";
+import AdminPage from "../components/admin/AdminPage";
 
 export const routes = [
     {
