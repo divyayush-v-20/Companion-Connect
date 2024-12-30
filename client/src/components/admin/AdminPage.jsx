@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
   const [petData, setPetData] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAdmin === false) {
@@ -20,9 +22,15 @@ export default function AdminPage() {
     const email = localStorage.getItem("currentUserEmail");
     console.log(email);
 
-    const dbRes = await fetch(`http://localhost:8000/admin/auth/${email}`, {
+    const dbRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/auth/${email}`, {
       method: "GET",
     });
+
+    if(dbRes.status == 403){
+      alert("Unauthorized Access");
+      navigate("/home");
+      return;
+    }
 
     const auth = await dbRes.json();
     console.log(auth.isAdmin);
@@ -33,7 +41,7 @@ export default function AdminPage() {
   };
 
   const fetchPetRequests = async () => {
-    const dbRes = await fetch(`http://localhost:8000/admin/pets`, {
+    const dbRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/pets`, {
       method: "GET",
     });
 
@@ -44,7 +52,7 @@ export default function AdminPage() {
   };
 
   const handleApprove = async (id) => {
-    const dbRes = await fetch(`http://localhost:8000/admin/pets/approve/${id}`, {
+    const dbRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/pets/approve/${id}`, {
         method: 'POST',
     })
     if(dbRes.ok){
@@ -56,7 +64,7 @@ export default function AdminPage() {
   const handleReject = async (id) => {
     console.log('inside reject method');
 
-    const dbRes = await fetch(`http://localhost:8000/admin/pets/reject/${id}`, {
+    const dbRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/pets/reject/${id}`, {
         method: 'POST',
     })
     if(dbRes.ok){

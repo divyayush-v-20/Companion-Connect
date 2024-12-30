@@ -12,7 +12,7 @@ const Navbar = () => {
         if(isLoggedIn){
           const email = localStorage.getItem("currentUserEmail");
           console.log(email);
-          const res = await fetch(`http://localhost:8000/admin/auth/${email}`, {
+          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/auth/${email}`, {
             method: 'GET'
           })
           const status = await res.json();

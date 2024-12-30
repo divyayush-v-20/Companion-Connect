@@ -59,7 +59,7 @@ const GiveForAdoption = () => {
     formData.append('image', image);
 
     try{
-      const response = await fetch("http://localhost:8000/pet/upload-pet", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/pet/upload-pet`, {
         method: 'POST',
         body: formData,
       });

@@ -16,7 +16,7 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const overlayRef = useRef(null);
   const filterPanelRef = useRef(null);
-  const baseUrl = "http://localhost:8000";
+  const baseUrl = `${import.meta.env.VITE_BACKEND_URL}`;
 
   useEffect(() => {
     const initialData = async () => {
