@@ -11,7 +11,8 @@ export const createPet = async(req, res) => {
             description,
             stateIso2,
             city,
-            currentUserEmail
+            currentUserEmail,
+            image
         } = req.body;
 
         const user = await UserModel.findOne({email: currentUserEmail});
@@ -27,7 +28,7 @@ export const createPet = async(req, res) => {
             description,
             stateIso2,
             city,
-            image: req.file.path,
+            image,
             owner: user._id
         });
 

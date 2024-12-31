@@ -1,24 +1,15 @@
 import express from "express";
-import multer from "multer";
 import { createPet } from "../controllers/PetController.js";
 import PetModel from "../models/Pet.model.js";
 import UserModel from "../models/User.model.js"
+// import {upload} from "../config/cloudinary.js";  
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "uploads/");
-    },
-    filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`);
-    },
-  });
+// const upload = multer({storage});
 
-const upload = multer({storage});
-
-router.post("/upload-pet", upload.single("image"), createPet);
-
+router.post("/upload-pet", createPet);
+// router.post("/upload-pet", upload.single("image"), createPet);
 
 router.get("/:city", async (req, res) => {
     const city = req?.params?.city;
