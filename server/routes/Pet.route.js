@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import { createPet } from "../controllers/PetController.js";
 import PetModel from "../models/Pet.model.js";
+import UserModel from "../models/User.model.js"
 
 const router = express.Router();
 
@@ -36,6 +37,22 @@ router.get("/:city", async (req, res) => {
     }
     
 });
+
+router.get("/owner/:id", async (req, res) => {
+    const id = req?.params?.id;
+    try{
+      const searchOwner = await UserModel.findById(id);
+      if(searchOwner){
+        res.status(200).send(searchOwner);
+      }
+      else{
+        res.status(404).send({message: "User does not exist"});
+      }
+    }
+    catch(error){
+      res.status(500).send({message: "Internal Server Error"});
+    }
+})
 
 
 export default router;

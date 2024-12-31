@@ -10,17 +10,16 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      const getAdminInfo = async() => {
-        if(isLoggedIn){
-          const email = localStorage.getItem("currentUserEmail");
-          console.log(email);
-          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/auth/${email}`, {
-            method: 'GET'
-          })
-          const status = await res.json();
-          if(status.isAdmin) setAdmin(true);
-          console.log(status.isAdmin);
-        }
+    const getAdminInfo = async () => {
+      if (isLoggedIn) {
+        const email = localStorage.getItem("currentUserEmail");
+        console.log(email);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/auth/${email}`, {
+          method: 'GET'
+        });
+        const status = await res.json();
+        if (status.isAdmin) setAdmin(true);
+        console.log(status.isAdmin);
       }
     };
     getAdminInfo();

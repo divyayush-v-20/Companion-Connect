@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import Navbar from "../navbar/Navbar";
-import { Menu } from "lucide-react";
 import citiesData from "../../utils/StateCityData.json";
 import { statesToIso2 } from "../../utils/StateISO2";
 
@@ -10,10 +9,10 @@ const HomePage = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [cityList, setCityList] = useState([]);
   const [selectedPet, setSelectedPet] = useState(null);
-  const [message, setMessage] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [ownerEmail, setOwnerEmail] = useState("");
   const overlayRef = useRef(null);
   const filterPanelRef = useRef(null);
   const baseUrl = `${import.meta.env.VITE_BACKEND_URL}`;
@@ -134,13 +133,29 @@ const HomePage = () => {
     setSelectedState("");
     setSelectedCity("");
     setCityList([]);
+    setPets([]);
     setIsFilterOpen(false);
     const city = localStorage.getItem("currentUserCity");
     if (city) {
       setSelectedCity(city);
-      fetchPetData();
+      setCityList(citiesData[city] || []);
+      setTimeout(fetchPetData, 0);
     }
   };
+
+  const handleAdopt = (pet) => () => {
+    setSelectedPet(pet);
+    getOwnerInfo(pet.owner);
+  }
+
+  const getOwnerInfo = async (ownerId) => {
+    const serverRes = await fetch(`${baseUrl}/pet/owner/${ownerId}`, {
+      method: 'GET',
+    })
+    const data = await serverRes.json();
+    console.log('owner data: ', data.email);
+    setOwnerEmail(data.email);
+  }
 
   const FilterContent = () => (
     <>
@@ -289,7 +304,7 @@ const HomePage = () => {
                         </p>
                         <button
                           className="mt-4 bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400"
-                          onClick={() => setSelectedPet(pet)}
+                          onClick={handleAdopt(pet)}
                         >
                           Adopt Me
                         </button>
@@ -318,51 +333,13 @@ const HomePage = () => {
             <p className="mb-2">
               <strong>Gender:</strong> {selectedPet.gender}
             </p>
-            <p className="mb-4">
+            <p className="mb-2">
               <strong>Description:</strong> {selectedPet.description}
+            </p>            
+            <p className = "mb-2">
+              <strong>Owner Contact:</strong>  {ownerEmail}
             </p>
-            {message === "" && (
-              <button
-                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400"
-                onClick={() => setMessage(" ")}
-              >
-                Contact the Owner
-              </button>
-            )}
-            {message !== "" && (
-              <div className="mt-4">
-                <textarea
-                  className="w-full border border-gray-300 rounded p-2 resize-none"
-                  rows="3"
-                  placeholder="Write your message here..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                ></textarea>
-                <button
-                  className="mt-2 bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400"
-                  onClick={() => {
-                    if (message.trim()) {
-                      alert(`Message sent: ${message}`);
-                      setSelectedPet(null);
-                      setMessage("");
-                    } else {
-                      alert("Please enter a message before sending.");
-                    }
-                  }}
-                >
-                  Send
-                </button>
-              </div>
-            )}
-            <button
-              className="mt-4 text-gray-500 hover:text-gray-700"
-              onClick={() => {
-                setSelectedPet(null);
-                setMessage("");
-              }}
-            >
-              Close
-            </button>
+
           </div>
         </div>
       )}

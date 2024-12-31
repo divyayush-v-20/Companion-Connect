@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../navbar/Navbar";
 
 export default function AdminPage() {
   const [petData, setPetData] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+  const baseUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     if (isAdmin === false) {
@@ -73,6 +75,10 @@ export default function AdminPage() {
     }
   };
 
+  const imgUrl = (img) => {
+    return `${baseUrl}/${img}`;
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-orange-100">
     <Navbar />
@@ -82,10 +88,12 @@ export default function AdminPage() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {petData.map((pet, index) => (
+
           <div
             key={index}
             className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"
           >
+            <img src={imgUrl(pet.image)} className="w-full h-auto max-h-48 object-contain rounded-t-lg" alt="" />
             <h3 className="text-xl font-semibold text-orange-600 mb-2">
               {pet.name}
             </h3>
