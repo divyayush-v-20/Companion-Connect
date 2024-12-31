@@ -24,7 +24,7 @@ router.get("/:city", async (req, res) => {
     const city = req?.params?.city;
     console.log(`Get Pet from specific ${city} request received`);
     try{
-      const searchPet = await PetModel.find({city: city});
+      const searchPet = await PetModel.find({city: city, approved: true});
       if(searchPet){
         res.status(200).send(searchPet);
       }
