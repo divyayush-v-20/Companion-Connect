@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const mongodb_uri = "mongodb+srv://divyayushv20:dv123@dev-cluster-0.os4jo.mongodb.net/projectdb";
+const mongodb_uri = process.env.MONGO_URI || "mongodb+srv://divyayushv20:dv123@dev-cluster-0.os4jo.mongodb.net/projectdb";
 
 export  async function connectDB(){
     try{

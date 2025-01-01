@@ -93,7 +93,7 @@ export default function AdminPage() {
             key={index}
             className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"
           >
-            <img src={imgUrl(pet.image)} className="w-full h-auto max-h-48 object-contain rounded-t-lg" alt="" />
+            <img src={pet.image} className="w-full h-auto max-h-48 object-contain rounded-t-lg" alt="" />
             <h3 className="text-xl font-semibold text-orange-600 mb-2">
               {pet.name}
             </h3>

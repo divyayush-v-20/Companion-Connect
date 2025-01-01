@@ -1,5 +1,5 @@
 import express from "express";
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 import {connectDB} from "./config/db.js"
 import userRoute from "./routes/User.route.js"
 import path from "path"

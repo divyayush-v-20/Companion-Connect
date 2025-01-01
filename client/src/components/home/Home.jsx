@@ -285,7 +285,7 @@ const HomePage = () => {
                       className="bg-white rounded-lg shadow-md p-4 transform hover:scale-105 transition duration-200"
                     >
                       <img
-                        src={HandleImageUrl(pet.image)}
+                        src={pet.image}
                         alt={pet.name}
                         className="w-full h-auto max-h-48 object-contain rounded-t-lg"
                         onError={(e) => {
