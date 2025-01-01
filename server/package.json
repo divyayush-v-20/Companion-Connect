@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "build": "next build",
     "start": "node --env-file=.env app.js",
     "dev": "nodemon app.js"
   },
